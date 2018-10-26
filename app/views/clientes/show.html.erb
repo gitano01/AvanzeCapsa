@@ -1,0 +1,48 @@
+<article>
+  <h4 align="center"> Vista del Cliente </h4>
+  <table class="table ">
+
+    <tr>
+      <td width="30%"><b> Nombre</b> <br><small>Nombre que identifica al cliente</small></td>
+      <td colspan="3"> <%= @clientes.nombre %></td>
+    </tr>
+    <tr>
+      <td ><b> Correo Electrónico</b> <br><small >Correo Electrónico propio
+        del cliente <br>para su futura comunicación</small> </td>
+      <td colspan="3"> <%= @clientes.email %></td>
+    </tr>
+    <tr>
+      <td ><b> RFC</b> <br><small>Registro Federal de Contribuyentes<br>del cliente</small></td>
+      <td colspan="3"> <%= @clientes.rfc %></td>
+    </tr>
+    <tr>
+      <td ><b> Teléfono(s)</b><br> <small>Registro del Teléfono del cliente
+        <br> para su futura comunicación</small></td>
+      <td colspan="3"> <%= @clientes.telefono %></td>
+    </tr>
+    <tr>
+      <td width="50"><b>Dirección</b><br><small>Ubicación fiscal de la sucursal</small></td>
+      <td width="50"> <%= @clientes.direccion %></td>
+      <td ><b> Código Postal </b></td>
+      <td > <%= @clientes.codigo_Postal %></td>
+    </tr>
+    <tr>
+      <td ><b> Ciudad</b><br><small>Municipio donde se ubica</small></td>
+      <td > <%= @clientes.ciudad %></td>
+      <td ><b>Estado</b><br><small>Entidad federativa</small> </td>
+      <td > <%= @clientes.estado %></td>
+    </tr>
+
+    <br>
+  </table>
+  <br/>
+  <table class="table table-responsive-sm">
+    <tr>
+      <td align="center">
+        <%= link_to 'Modificar', edit_cliente_path(@clientes), class: 'btn btn-primary btn-sm'%>
+      <%= link_to 'Nuevo', new_cliente_path, class: 'btn btn-primary btn-sm' %>
+        <%= link_to 'Regresar', clientes_path, class: 'btn btn-primary btn-sm'%>
+      </td>
+    </tr>
+  </table>
+</article>

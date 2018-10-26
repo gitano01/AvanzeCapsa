@@ -1,0 +1,12 @@
+if ($("#<%=@producto_kit.id%>").length== 0)
+$('#tbody_kit').append("<%= j (render 'tbody_kit') %>")
+else
+{
+	var band = parseInt($("#<%=@producto_kit.id%>").children().children("input").val()) + 1;
+    if(band!== 100)
+    $("#<%=@producto_kit.id%>").children().children("input").val(band);
+}
+
+$(".eliminar").click(function () {
+    $(this).parents(".fila_kit").remove();
+})

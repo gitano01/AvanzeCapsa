@@ -1,0 +1,157 @@
+<br/>
+<%= form_for(@descuento) do |f| %>
+  <table class="table">
+    <tr>
+      <td width="30%"><label>Nombre*</label><br/><small>Nombre o descripción que identifica a la promoción</small></td>
+      <td><%= f.text_field :nombre, class: 'form-control', focus: true %>
+        <small id="nombre"></small>
+      </td>
+    </tr>
+  </table>
+  <table class="table">
+    <tr>
+      <td width="20%"><label>Monto*</label><br/><small>Porcentaje de descuento (%)</small></td>
+      <td>
+        <div class="input-group">
+          <%= f.text_field :monto, class: 'form-control', onkeypress: 'return validar_numero(event)', maxlength: 3 %>
+          <div class="input-group-append">
+            <span class="input-group-text">%</span>
+          </div>
+        </div>
+        <small id="monto"></small>
+      </td>
+      <td width="15%"><label>Fecha inicial*</label><br/><small>Fecha de inicio:</small></td>
+      <td width="20%">
+        <div class="input-group">
+          <%= f.text_field :fecha_inicial, class: 'form-control', readonly: true%>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <%= fa_icon 'calendar', class: 'cursor text-danger', id: 'fecha_inicial' %>
+            </div>
+          </div>
+        </div>
+        <small id="fecha_i"></small>
+      </td>
+      <td width="15%"><label>Fecha final*</label><br/><small>Fecha en que termina:</small></td>
+      <td width="20%">
+        <div class="input-group">
+          <%= f.text_field :fecha_final, class: 'form-control', readonly: true%>
+          <div class="input-group-append">
+            <span class="input-group-text">
+              <%= fa_icon 'calendar', class: 'cursor text-danger', id: 'fecha_final' %>
+            </span>
+          </div>
+        </div>
+        <small id="fecha_f"></small>
+      </td>
+    </tr>
+  </table>
+
+  <table class="table">
+    <tr>
+      <td><label> Categoría </label></td>
+      <td width="50%">
+        <div class="input-group">
+          <%= collection_select(:categoria, :id, @categorias, :id, :nombre, {prompt: "---Seleciona una categoría---"}, { class: "form-control-sm" })%>
+          <div class="input-group-append">
+              <input title="Agregar Categoría" type="button" value="+"  id="btnCategoria">
+          </div>
+        </div>
+      </td>
+      <td><label>Producto</label></td>
+      <td width="50%">
+        <div class="input-group">
+          <div id="productos">
+            <%= collection_select(:producto, :id, @productos, :id, :nombre, {prompt: "---Selecione un producto---"}, { class: "form-control-sm" })%>
+          </div>
+          <div class="input-group-append">
+              <input title="Agregar Producto" type="button" value="+"  id="btnProducto">
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+  <table class="table table-sm">
+    <tr>
+      <td width="40%">
+        <label>Categorías ingresadas</label><br/><br/>
+        <table class="table table-sm table-hover table-bordered">
+          <thead class="bg-primary text-white">
+            <tr>
+              <th class="text-center">Categoría</th>
+              <th class="text-center"></th>
+            </tr>
+          </thead>
+          <tbody id="lista_categoria">
+          </tbody>
+        </table>
+        <small id="msg_categoria"></small>
+      </td>
+      <td width="60%">
+        <label>Lista de Productos*</label><br/><small>Lista de Productos a los que se le aplicará la promoción</small>
+        <table class="table table-sm table-hover table-bordered">
+          <thead class="bg-primary text-white">
+            <tr>
+              <th class="text-center" width="35%">Código</th>
+              <th class="text-center" width="50%">Producto</th>
+              <th class="text-center" width="15%"></th>
+            </tr>
+          </thead>
+          <tbody id="lista_producto">
+          </tbody>
+        </table>
+        <small id="msg_producto"></small>
+      </td>
+    </tr>
+  </table>
+  <div id="prod_id"></div>
+  <table class="table">
+    <tr>
+      <td class="text-center">
+        <small>Nota: Los campos marcados con * son obligatorios</small><br/><br/>
+        <%= f.submit 'Guardar', id: 'btnGuardar', :onclick=>"return validarFormularioDescuentos()", class: 'btn btn-sm btn-primary'%>
+        <%= link_to "Cancelar", '#', class: 'btn btn-sm btn-danger', data: { toggle: 'modal', target: '#ModalForm'} %>
+      </td>
+    </tr>
+  </table>
+<% end %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+     <% @descuento.productos.each do |producto| %>
+        var producto = new Object();
+        producto.id = '<%= producto.id %>';
+        producto.nombre = '<%= producto.nombre %>';
+        producto.codigo = '<%= producto.codigo %>';
+        <% producto.categorias.each do |cate| %>
+          producto.categoria = '<%= cate.id %>';
+          <% break %>
+        <% end %>
+        productos.push(producto);
+      <% end %>
+      <% @categorias.each do |c| %>
+        $.ajax({
+          url:  "/descuentos/total_producto",
+          type: "POST",
+          data: { categoria_id: '<%= c.id %>' },
+          success: function(data){
+            cont = 0;
+            for(var k=0; k<productos.length; k++){
+              if(productos[k].categoria == '<%= c.id %>'){
+                cont++;
+              }
+            }
+            if(data == cont && cont > 0){
+              var categoria = new Object();
+              categoria.id = '<%= c.id %>';
+              categoria.nombre = '<%= c.nombre %>';
+              categorias.push(categoria);
+              listarCategorias();
+            }
+          }
+        });
+      <% end %>
+      listarProductos();
+  });
+</script>

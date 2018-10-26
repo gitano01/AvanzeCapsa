@@ -1,0 +1,76 @@
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#nueva_caja').hide();
+    $("input[type=radio]").click(function(event){
+      if(($(event.target).val())=='no'){
+        $('#nueva_caja').hide();
+        $('#seleccionar_caja').hide();
+      }else{
+        $("#terminal_cajas_registradora_id").prop('selectedIndex',0);
+        $('#seleccionar_caja').show();
+      }
+    });
+
+    $('#terminal_cajas_registradora_id').on('change', function(){
+      if($("#terminal_cajas_registradora_id option:selected").text()=='Otra'){
+        $('#nueva_caja').show();
+      }
+    });
+
+
+    <% if @terminal.id.present? %>
+      <% if @terminal.cajas_registradora_id.blank? %>
+        $("#opciones_no").prop("checked", true); 
+        $('#seleccionar_caja').hide();     
+      <% else %>
+        $('#nueva_caja').hide();
+      <% end %>
+    <% end %>
+  });
+</script>
+
+    <table class="table table-sm">
+      <tr class="field">
+      <td width="25%"><label>Nombre*</label><br><small>Nombre que identifica a la terminal</small></td>
+      <td><%= text_field :terminal ,:nombre, placeholder: 'Ingrese el Nombre de la terminal', class: 'form-control',id: 'nombreTerminal',onkeypress: 'return validarNombre(event);', maxlength: 25 %>
+        <small id="msg_nombreTerminal"></small></td>
+      </tr>
+      <tr>
+        <td><label>Sucursal*</label><br><small>Sucursal a la pertenece la terminal </small></td>
+        <td><%= select_tag 'sucursal_id', options_for_select(@sucursales.collect {|p| [p.nombre, p.id]}), {class: 'custom-select'}%></td>
+      </tr>
+      <tr>
+        <td><label>Inventario*</label><br><small> Inventario asignado a la terminal</small></td>
+        <td><%= select_tag 'inventario_id', options_for_select(@inventarios.collect {|p| [p.nombre, p.id]}), {class: 'custom-select'} %></td>
+      </tr>
+      <tr>
+        <td><label>Caja registradora</label></td>
+        <td>
+          <%= radio_button_tag 'opciones', 'si', true %> Si
+          <%= radio_button_tag 'opciones', 'no' %> No
+        </td>
+      </tr>
+      <tr id="seleccionar_caja">
+        <td><label>Caja Registradora</label><br> <small>Caja registradora con la que trabajara la terminal</small></td>
+        <td>
+            <%= collection_select(:terminal, :cajas_registradora_id, CajasRegistradora.all << CajasRegistradora.new(:nombre => 'Otra'), :id, :nombre, {prompt: "---Seleccione una opción---"}, { class: "form-control-sm" })%><%= link_to "Catálogo de Cajas", cajas_registradoras_path, class: 'btn btn-link' %><br/>
+            <small id="msg_seleccion"></small><br/>
+        </td>
+      </tr>
+      <tr id="nueva_caja">  
+          <td><label>Nombre de la nueva caja registradora*</label><br><small>Nombre de la nueva caja registradora que le será asignada a la terminal</small></td>
+          <td><%= text_field :caja_registradora, :nombre, placeholder: 'Ingrese el Nombre ', class: 'form-control', id: 'nombreCaja', onkeypress: 'return validarNombre(event);', maxlength: 20%>
+          <small id="msg_nombreCaja"></small></td>
+          <td width="20%"><label>Monto Inicial*</label><br> <small>Cantidad monetaria con la que se abre la caja por defecto</small></td>
+          <td width="21%">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">$</span>
+              </div>
+              <%= text_field :caja_registradora, :monto_inicial, placeholder: 'Ingrese el monto inicial', class: 'form-control', id: 'montoInicial', maxlength: 9, onkeypress: 'return validarMontoInicial(event);'%>
+            </div>
+            <small id="msg_montoInicial"></small>
+          </td>
+      </tr>
+    </table>
+  

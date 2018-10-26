@@ -1,0 +1,48 @@
+<h4 class="text-center">Modificación de la empresa</h4><br>
+<table class="table">
+  <%= form_for @empresa do |f| %>
+    <% @empresa.errors.full_messages.each do |error_message| %>
+      <%= error_message %>
+    <% end %>
+    <tr>
+      <td width="25%"><%= f.label :nombre, 'Nombre*:'%><br>
+        <small>Nombre de la empresa:</small></td>
+      <td><%= f.text_field :nombre, placeholder: 'Ingresa el nombre de la empresa', class: 'form-control', type: 'text',id: 'nombreE', onkeypress: 'return nombre(event)', maxlength: 30 %>
+      <small id="msg_nombreE"></small></td>
+    </tr>
+    <tr>
+      <td><%= f.label :rfc, 'RFC:' %><br>
+        <small>Registro Federal de Contribuyentes de la empresa</small></td>
+      <td><%= f.text_field :rfc, placeholder: 'Ingresa el RFC de la empresa', class: 'form-control', autofocus: true,
+                           required: false, id: 'rfcE', type: 'text',onkeypress: 'return validaRFC(event);',
+                           maxlength: 12%>
+        <small id="msg_rfcE"></small></td>
+    </tr>
+    <tr>
+      <td>
+        <%= f.label :iva, 'IVA %(*):' %><br>
+        <small>Porcentaje de IVA aplicado a los productos</small>
+      </td>
+      <td><%= f.text_field :iva, placeholder: 'Ingresa el monto de IVA', class: 'form-control', autofocus: true,id: 'ivaE',onkeypress: 'return validar_iva(event);', maxlength: 3%>
+        <small id="msg_ivaE"></small></td>
+    </tr>
+    <tr>
+      <td><%= f.label :logotipo, 'Logotipo:' %><br></td>
+      <td colspan="2" class="text-center"><%= f.file_field :imagen %></td>
+    </tr>
+</table><br>
+<table class="table text-center">
+ <tr>
+   <td><br>
+     <small class="form-text text-muted">Nota: los campos marcados con * son obligatorios</small><br>
+     <% if nombre=="Registrar empresa" %>
+       <%= f.submit 'Guardar',id:'btnGuardar' , class: 'btn btn-primary btn-sm', onclick: 'return validarFormularioEmpresa();' %>
+     <% else %>
+       <%= f.submit 'Guardar Cambios',id:'btnGuardar', class: 'btn btn-primary btn-sm', onclick: 'return validarFormularioEmpresa();'%>
+     <% end %>
+     <%= link_to 'Cancelar', configuraciones_path, class: 'btn btn-danger btn-sm',data: {toggle: 'modal', target: '#ModalForm'}%>
+   </td>
+ </tr>
+</table>
+<% end%>
+

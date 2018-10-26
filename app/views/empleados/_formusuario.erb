@@ -1,0 +1,32 @@
+<h5 class="text-center">Datos del usuario</h5><br/>
+<table  class="table table-sm">
+	<tr>
+		<td width="40%"><label>Nombre de usuario*</label></br><small>Nombre único que identifica al usuario</small></td>
+		<td><%= text_field :usuario, :usuario, class: 'form-control', maxlength: 20, onkeypress: 'return validarUsuario(event, this)'%>
+			<small id="usuario"></small></td>
+	</tr>
+	<tr>
+		<td width="40%"><label>Email*</label></br><small>Dirección de correo electrónico</small></td>
+		<td><%= text_field :usuario, :email, class: 'form-control', maxlength: 35%>
+			<small id="email"></small></td>
+	</tr>
+	<tr>
+		<td width="40%"><label>Rol</label></br><small>Nivel de privilegios del usuario</small></td>
+		<td>
+
+       <%= select :usuario, :tipo, @tipos, {select: @tipos}, class:'form-control'%>
+
+		</td>
+	</tr>
+	<tr>
+		<td width="40%"><label>Contraseña*</label><br/><small>Palabra secreta para la restricción de acceso al sistema</small></td>
+		<td><%= text_field :usuario, :contrasena_cifrado, class: 'form-control', type:'password', maxlength: 45%>
+			<small id="pass"></small></td>
+	</tr>
+	<tr>
+		<td><label>Confirmar contraseña*</label><br/><small>Se debe confirmar la contraseña de acceso al sistema</small></td>
+		<td><%= text_field :usuario, :contrasena_cifrado, class: 'form-control', type: 'password', maxlength: 45, id: 'user_confirmar_contrasena' %>
+			<small id="pass_confirm"></small>
+		</td>
+	</tr>
+</table>

@@ -1,0 +1,137 @@
+<div class="col-md-12 align-content-center">
+<h4 class="text-center">Vista de un producto</h4>
+      </br>
+      <div class="row">
+        </br>
+        <table class="table">
+          <tr>
+            <td width="50">
+              <b>Nombre</b><br>
+              <small> Nombre que identifica el producto</small>
+            </td>
+            <td><%= @producto.nombre %><br>
+
+            </td>
+          </tr>
+          <tr>
+            <td width="50"><b>Descripción</b><br>
+              <small> Descripción del producto</small>
+            </td>
+            <td>
+              <%= @producto.definicion%>
+            </td>
+          </tr>
+          <tr>
+            <td width="50">
+              <b>Código</b>
+              <br><small> Nombre clave único para identificar un producto</small>
+            </td>
+            <td><%= @producto.codigo%></td>
+          </tr>
+          <tr>
+            <td width="40%"><b>Localización.</b><br>
+              <small> Nombre que identifica la localización física del producto</small>
+            </td>
+            <td><%= @producto.lugar %></td>
+          </tr>
+          <% if @producto.kit %>
+          <tr>
+            <td width="20">
+              <b>Kit</b><br>
+              <small>Productos que están dentro del kit</small>
+            </td>
+            <td>
+              <table class="table table-sm table-bordered">
+                <thead class="bg-primary text-light">
+                <th class="col-9">Nombre</th>
+                <th class="col-3">Cantidad</th>
+                </thead>
+                <tbody>
+                <% @productos_del_kit.each do |p|%>
+                  <tr>
+                    <td>
+                      <%= Producto.find(p.producto_id.to_i).nombre %>
+                    </td>
+                    <td>
+                      <%= p.cantidad  %>
+                    </td>
+                  </tr>
+                <% end %>
+                </tbody>
+              </table>
+
+
+            </td>
+          </tr>
+            <% end %>
+          <tr>
+            <td width="20">
+              <b>Disponible en inventario</b>
+              <br>
+              <small>Campo que identifica si el producto está físicamente en el inventario</small>
+            </td>
+            <td><%= check_box_tag 'disponible_en_inventario','disponible_en_inventario',checked = @producto.disponible_en_inventario,{:disabled =>'true'}%></td>
+          </tr>
+          <tr>
+            <td width="20">
+              <b>IVA</b>
+              <br><small>Campo que identifica si al producto se le agrega el IVA</small>
+            </td>
+            <td><%= check_box_tag 'IVA','IVA',checked = @producto.iva,{:disabled =>'true'} %></td>
+          </tr>
+          <tr>
+            <td width="20">
+              <b>Precio</b>
+              <br>
+              <small>Precio al que se venderá el producto</small>
+            </td>
+            <td><%= number_to_currency(@producto.precio) %></td>
+          </tr>
+          <tr>
+            <td width="20">
+              <b>Costo </b>
+              <br>
+              <small> Precio al que se compró el producto</small>
+            </td>
+            <td><%= number_to_currency(@producto.precio_costo) %></td>
+          </tr>
+          <tr>
+            <td width="20"><b>Categorías </b>
+              <br>
+              <small>Categorías a las que pertenece el producto</small>
+            </td>
+            <td>
+              <% @producto.categorias.each do |c| %>
+                <%=c.nombre %><br>
+              <%end%>
+            </td>
+          </tr>
+          <tr>
+            <td width="20"><b>Unidades</b><br>
+              <small>Unidades de medición en las que se vende el producto</small>
+            </td>
+            <td><%= @unidad.nombre %></td>
+          </tr>
+          <tr>
+            <td>
+              <label> Logotipo </label>
+              <br>
+              <small>Imagen del producto</small>
+            </td>
+            <td><%= image_tag @producto.imagen.url(:medium) %></td>
+          </tr>
+        </table>
+      </div>
+      <br>
+      <div class="text-center">
+        <table class="table table-responsive-sm">
+          <tr>
+            <td><%= link_to 'Modificar', edit_producto_path(@producto),class: 'btn btn-primary  btn-sm' %>
+              <%= link_to 'Nuevo', new_producto_path, class: 'btn btn-primary btn-sm' %>
+              <%= link_to 'Regresar', productos_path,class: 'btn btn-primary btn-sm' %>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <!--end-->
+</div>

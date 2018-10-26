@@ -1,0 +1,17 @@
+<h4 class="text-center">Nuevo Empleado - Usuario</h4>
+<br/>
+<%= form_tag :action=>:create do %>
+	<div class="row">
+		<div class="col-md-6">
+			<%= render 'formempleado' %>
+		</div>
+		<div class="col-md-6">
+			<%= render 'formusuario' %>
+		</div>
+	</div>
+	<div class="text-center">
+		<small>Nota: Los campos marcados con * son obligatorios</small><br/><br/>
+		<%= submit_tag "Guardar", :onclick=>"return validarFormularioEmpleados()", class: 'btn btn-sm btn-primary', id: 'btnGuardar'%>
+        <%= link_to "Cancelar", '#', class: 'btn btn-sm btn-danger', data: { toggle: 'modal', target: '#ModalForm'} %>
+	</div><br/><br/>
+<% end %>

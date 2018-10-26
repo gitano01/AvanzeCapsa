@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Capsa3</title>
+  <%= stylesheet_link_tag    'application', media: 'all' %>
+  <%= javascript_include_tag 'application' %>
+  <%= csrf_meta_tags %>
+</head>
+
+<body >
+<%- if user_signed_in? %>
+  <%= render :file => '/layouts/_menu.html.erb' %>
+  <%= render :file => 'layouts/_divClose.html.erb'%>
+  <%unless @controlador.nil? %>
+  <%= render :file =>'/layouts/_modal_index.html.erb' %>
+  <%= render :file =>'/layouts/_modal_form.html.erb' %>
+
+  <% end %>
+
+  <% flash.each do |key, value| %>
+  <div class="text-center text-<%= key %>">
+    <%= value %>
+  </div>
+<% end %>
+
+  <div class="container">
+    <%= yield %>
+  </div>
+</div>
+
+<!--<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>-->
+
+
+</body>
+<%-else%>
+<br><br><br><br><br>
+  <%= render :file => 'devise/sessions/new'%>
+
+<%end%>
+</html>

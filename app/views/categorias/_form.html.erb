@@ -1,0 +1,35 @@
+
+<div class="col-md-12">
+  <%= form_for @categoria  do |f|  %>
+    <table class="table">
+      <tr>
+        <td width="25%" >
+          <%=f.label 'Nombre *' %>
+          <br><small> Nombre que identifica la categoría</small>
+        </td>
+        <td>
+          <%= f.text_field :nombre,id: 'nombre', placeholder: 'Ingrese el nombre de la categoría', class: 'form-control', autofocus: true,
+                           maxlength: 25%>
+          <small id="msg_nombre"></small>
+        </td>
+      </tr>
+    </table>
+    <table class="table table-responsive-sm">
+      <tr>
+        <td align="center">
+          <!--botón nombre, cambia respecto a la acción de deba hacer crear o modificar-->
+          <br>
+          <small class="form-text text-muted">Nota: Los campos marcados con * son obligatorios</small>
+          <br>
+          <!-- funcion cancelar-->
+          <% if nombre=="Crear Categoría" %>
+            <%=f.submit 'Guardar', class:'btn btn-primary btn-sm',onclick: 'return validarFormularioCategorias();'%>
+          <% else %>
+            <%= f.submit 'Guardar Cambios', class:'btn btn-primary btn-sm',onclick: 'return validarFormularioCategorias();'%>
+          <% end %>
+          <%= link_to 'Cancelar', '#', class: 'btn btn-danger btn-sm',data: {toggle: 'modal', target: '#ModalForm'}%>
+        </td>
+      </tr>
+    </table>
+  <%end%>
+</div>

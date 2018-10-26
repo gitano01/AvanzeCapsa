@@ -1,0 +1,43 @@
+<div class="panel panel-info">
+  <div class="panel-heading"><h4 class="text-center">Catálogo de Sucursales</h4></div>
+  <div class="panel-body"><br>
+    <%if @sucursales.size > 0 %>
+      <table class="table table-bordered table-sm">
+        <thead class="bg-primary text-light">
+          <th>Nombre</th>
+          <th>Teléfonos</th>
+          <th>Dirección</th>
+          <th width="10%" colspan="4">Opciones</th>
+        </thead>
+        <tbody>
+          <% @sucursales.each do |sucursal| %>
+            <tr>
+              <td> <%= sucursal.nombre %> </td>
+              <td><%= sucursal.telefonos%></td>
+              <td><%= sucursal.direccion%></td>
+              <td><%= link_to sucursal, title: 'Mostrar' do %><%= fa_icon "eye" %> <br><% end %></td>
+              <td><%= link_to edit_sucursal_path(sucursal), title: 'Modificar' do %><%= fa_icon "edit"%> <% end %></td >
+              <td><%= link_to (fa_icon 'trash'), '#', data: { toggle: 'modal', target: '#ModalIndex' }, title: 'Eliminar', onclick:('cambiarId('+sucursal.id.to_s+',"'+@controlador.to_s+'")'), title: 'Eliminar'%></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <div class="text-center">
+        <table class="table align-content-center">
+          <tr>
+            <td><%= link_to 'Nueva', new_sucursal_path, class: 'btn btn-primary'%></td>
+          </tr>
+        </table>
+      </div>
+    <% else %>
+      <div class="text-center">
+        <h3><%= "No existen sucursales actualmente" %></h3>
+        <table class="table align-content-center">
+          <tr>
+            <td><%= link_to 'Nueva', new_sucursal_path, class: 'btn btn-primary'%></td>
+          </tr>
+        </table>
+      </div>
+    <%end%>
+  </div>
+</div>

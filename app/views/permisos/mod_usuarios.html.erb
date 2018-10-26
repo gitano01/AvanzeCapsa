@@ -1,0 +1,36 @@
+<br/></br>
+<h4 class="text-center">Configuración de permisos de acceso por módulo</h4>
+<br/>
+<% if @usuarios.size > 0 %>
+	<table class="table table-bordered table-hover table-sm">
+		<thead class="bg-primary text-white">
+			<tr>
+			   	<th width="45%">Nombre completo del usuario</th>
+			   	<th width="15%">Usuario</th>
+			   	<th width="20%">Rol</th>
+			   	<th width="20%" colspan="2" class="text-center">Opciones</th>
+			</tr>
+		</thead>
+		<% @usuarios.each do |usuario| %>
+		<tr>
+		    <td><%= usuario.empleado.nombre_completo + ' ' + usuario.empleado.apellido_paterno + ' ' + usuario.empleado.apellido_materno %></td>
+		    <td><%= usuario.usuario %></td>
+		    <td><%= usuario.tipo %></td>
+			<td class="text-center"><%= link_to :action => :mod_usuarios_rest, :id => usuario.id do %>
+					<%= fa_icon 'edit', title: 'Modificar' %>
+				<% end %>
+			</td>
+		    <td class="text-center"><%= link_to :action => :show_modulos, :id => usuario.id do %>
+		      		<%= fa_icon 'eye', title: 'Mostrar' %>
+		    	<% end %>
+		    </td>
+		</tr>
+		<% end %>
+	</table>
+<% else %>
+	<h5 class="text-center">No existen Empleados actualmente</h5><br/>
+	<div class="text-center">
+		<%= link_to 'Nuevo', new_empleado_path, class: 'btn btn-sm btn-primary' %>
+	</div>
+<% end %>
+	

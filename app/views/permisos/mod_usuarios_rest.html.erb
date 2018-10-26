@@ -1,0 +1,162 @@
+<br/><br/>
+<h4 class="text-center">Configuración de permisos de acceso por módulo</h4>
+<h5 class="text-center"><strong>Usuario:</strong> <%= @usuario.usuario + ' / ' + @usuario.empleado.nombre_completo + ' ' + @usuario.empleado.apellido_paterno + ' ' + @usuario.empleado.apellido_materno %> </h5><br/>
+
+	<%= form_tag :action => :guardar_cambios, :id => @usuario.id do %>
+	 	<div class="row">
+	  		<div class="col-md-5">
+	  			<div class="content">
+	  				<table class="table table-sm">
+		  				<thead class="bg-primary text-white">
+		  					<tr>
+		  						<th colspan="2" class="text-center">Seleccione los módulos a los que tendrá acceso el Usuario</th>
+		  					</tr>
+		  				</thead>
+		  				<tbody id="permisos_faltantes">
+			  			</tbody>
+			  		</table>
+	  			</div>
+		  		<div class="text-center pull-right">
+		  			<span><input type="checkbox" id="seleccionar_nuevos"> Seleccionar todo</span>
+		  		</div>
+		  	</div>
+			<div class="col-md-1 text-center botones">
+				<button type="button" title="Agregar" id="agregar_permisos" class="btn btn-sm cursor"> > </button><br/><br/>
+				<button type="button" title="Quitar" id="quitar_permisos" class="btn btn-sm cursor"> < </button>
+			</div>
+	  		<div class="col-md-5">
+	  			<div class="content">
+	  				<table class="table table-sm">
+		  				<thead class="bg-primary text-white">
+		  					<tr>
+		  						<th colspan="2" class="text-center">Módulos a los que tendrá acceso el Usuario:</th>
+		  					</tr>
+		  				</thead>
+		  				<tbody id="permisos_agregados">
+		  				</tbody>
+		  			</table>
+	  			</div>
+	  			<div class="text-center pull-right">
+		  			<span><input type="checkbox" id="seleccionar_agregados"> Seleccionar todo</span>
+		  		</div>
+	  		</div>	
+		</div>
+		<div id="modulos"></div>
+		<div class="text-center"><br/>
+	  		<small>Nota: Los permisos marcados con <i class="fa-check-circle fa guardado"></i> son aquellos que el usuario ya tiene acceso.</small><br/><br/>
+	  		<%= submit_tag "Guardar", class: 'btn btn-sm btn-primary', id: 'guardar'%>
+	    	<%= link_to 'Regresar', {:controller => 'permisos', :action => :mod_usuarios}, {class: 'btn btn-sm btn-primary'} %>
+		</div>
+	<% end %>
+	
+<script type="text/javascript">
+
+	$(function (){ 
+
+		$('#seleccionar_nuevos').click(function () {
+	    	$("#permisos_faltantes input[type=checkbox]").prop('checked', $(this).prop("checked"));
+	  	});
+
+	  	$('#seleccionar_agregados').click(function () {
+	    	$("#permisos_agregados input[type=checkbox]").prop('checked', $(this).prop("checked"));
+	  	});
+
+		$('#agregar_permisos').click(function(){
+			var rows = '';
+			var rows2 = '';
+			var modulos = '';
+			<% for m in @modulos %>
+				if (($("#permisos_faltantes #<%= m.id %>").is(':checked')) || (!$('#permisos_faltantes #<%= m.id %>').length)){
+					modulos += '<input type="hidden" name="<%= m.nombre_controlador %>" value="1">';
+					<% if @usuario.modulos.include? m %>
+						rows += '<tr><td width="15%"><input type="checkbox" class="pull-right" id="<%= m.id %>"></td>  <td class="text-right"> <%= m.nombre %> <i class="fa-check-circle fa guardado"></i></td></tr>';
+					<% else %>
+						rows += '<tr><td width="15%"><input type="checkbox" class="pull-right" id="<%= m.id %>"></td>  <td class="text-right"> <%= m.nombre %></td></tr>';
+					<% end %>
+				}else{
+					<% if @usuario.modulos.include? m %>
+						rows2 += '<tr><td width="15%"><input type="checkbox" class="pull-right" id="<%= m.id %>"></td>  <td class="text-right"> <%= m.nombre %> <i class="fa-check-circle fa guardado"></i></td></tr>';
+					<% else %>
+						rows2 += '<tr><td width="15%"><input type="checkbox" class="pull-right" id="<%= m.id %>"></td>  <td class="text-right"> <%= m.nombre %></td></tr>';
+					<% end %>
+				}
+			<% end %>
+			document.getElementById("permisos_agregados").innerHTML="";
+	  		document.getElementById("permisos_faltantes").innerHTML="";
+	  		document.getElementById("modulos").innerHTML="";
+	  		$('#seleccionar_nuevos').prop('checked', false);
+	  		$('#seleccionar_agregados').prop('checked', false);
+	  		$('#permisos_agregados').append(rows);
+	  		$('#permisos_faltantes').append(rows2);
+	  		$('#modulos').append(modulos);
+		});
+
+		$('#quitar_permisos').click(function(){
+			var rows = '';
+			var rows2 = '';
+			var modulos = '';
+			<% for m in @modulos %>
+				if (($("#permisos_agregados #<%= m.id %>").is(':checked')) || (!$('#permisos_agregados #<%= m.id %>').length)){
+					<% if @usuario.modulos.include? m %>
+						rows += '<tr><td width="15%"><input type="checkbox" class="pull-right" id="<%= m.id %>"></td>  <td class="text-right"> <%= m.nombre %> <i class="fa-check-circle fa guardado"></i></td></tr>';
+					<% else %>
+						rows += '<tr><td width="15%"><input type="checkbox" class="pull-right" id="<%= m.id %>"></td>  <td class="text-right"> <%= m.nombre %></td></tr>';
+					<% end %>
+				}else{
+					<% if @usuario.modulos.include? m %>
+						rows2 += '<tr><td width="15%"><input type="checkbox" class="pull-right" id="<%= m.id %>"></td>  <td class="text-right"> <%= m.nombre %> <i class="fa-check-circle fa guardado"></i></td></tr>';
+					<% else %>
+						rows2 += '<tr><td width="15%"><input type="checkbox" class="pull-right" id="<%= m.id %>"></td>  <td class="text-right"> <%= m.nombre %></td></tr>';
+					<% end %>
+					modulos += '<input type="hidden" name="<%= m.nombre_controlador %>" value="1">';
+				}
+			<% end %>
+			document.getElementById("permisos_agregados").innerHTML="";
+	  		document.getElementById("permisos_faltantes").innerHTML="";
+	  		document.getElementById("modulos").innerHTML="";
+	  		$('#seleccionar_nuevos').prop('checked', false);
+	  		$('#seleccionar_agregados').prop('checked', false);
+	  		$('#permisos_agregados').append(rows2);
+	  		$('#permisos_faltantes').append(rows);
+	  		$('#modulos').append(modulos);
+		});
+
+	});
+
+  	function permisos_asignados(){
+  		var rows = '';
+  		var mod = '';
+  		<% for m in @modulos %>
+	  		<% if @usuario.modulos.include? m %>
+	  			mod += '<input type="hidden" name="<%= m.nombre_controlador %>" value="1">';
+	  			rows += '<tr>';
+	  			rows += '<td width="15%"><input type="checkbox" class="pull-right" id="<%= m.id %>"></td>';
+	  			rows += '<td class="text-right"><%= m.nombre %> <i class="fa-check-circle fa guardado"></i></td>';
+	  			rows += '</tr>';
+	  		<% end %>
+  		<% end %>	
+  		$('#permisos_agregados').append(rows);
+  		$('#modulos').append(mod);
+  	}
+
+  	function modulos(){
+  		var rows = '';
+  		document.getElementById("permisos_agregados").innerHTML="";
+	  	document.getElementById("permisos_faltantes").innerHTML="";
+  		<% for m in @modulos %>
+	  		<% unless @usuario.modulos.include? m %>
+	  			rows += '<tr>';
+	  			rows += '<td width="15%"><input type="checkbox" class="pull-right" id="<%= m.id %>"></td>';
+	  			rows += '<td class="text-right"><%= m.nombre %></td>';
+	  			rows += '</tr>';
+	  		<% end %>
+  		<% end %>
+  		$('#permisos_faltantes').append(rows);
+  		permisos_asignados();
+  	}
+
+  	$(document).ready(function() {
+	   modulos();
+	});
+
+</script>

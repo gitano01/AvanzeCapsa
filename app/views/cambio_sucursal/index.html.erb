@@ -1,0 +1,38 @@
+<!-- Vista del usuario para escoger una sucursal para cambiar-->
+<h3 align="center">Cambio de Sucursal y Terminal</h3>
+<br/>
+<% if @terminales.size > 0 %>
+  <% if cookies["TerminalActual"].nil? %>
+    <table class="table table-sm text-center ">
+      <tr>
+        <td><h4>Es necesario registrar su Terminal para poder utilizar las funcionalidades del sistema</h4></td>
+      </tr>
+      <tr>
+        <td><h5>Seleccione Sucursal y Terminal a asignar</h5></td>
+      </tr>
+    </table>
+  <% else %>
+    <h3 align="center">Elija la Sucursal - Terminal a la que se desea cambiar</h3>
+  <% end %>
+  <%=form_tag action: :cambiar do |f| %>
+    <table class="table text-center">
+      <tr>
+        <td><%= "Sucursal - Terminal: " %><%= select_tag 'id_ter', options_for_select(@terminales.collect {|p| [p.sucursal.nombre + " - " + p.nombre, p.id]},cookies["TerminalActual"]) %></td>
+      </tr>
+    </table><br/>
+    <table class="table text-center">
+      <tr>
+        <td>
+          <%= submit_tag "Confirmar Cambio" , class: 'btn btn-primary'%>
+          <%= link_to 'Regresar', configuraciones_path, class: 'btn btn-primary'%>
+        </td>
+      </tr>
+    </table>
+  <%end %><br><br>
+<%else %>
+  <h4>No existen terminales registradas en el sistema<br/>Consulte al Administrador</h4><br/>
+  <%= link_to 'Crear terminal nuevo', terminales_path, class: 'btn btn-primary btn-sm' %>
+<%end %>
+
+
+

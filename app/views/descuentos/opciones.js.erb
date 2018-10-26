@@ -1,0 +1,2 @@
+var html = "<%= j(collection_select(:producto, :id, @productos, :id, :nombre, {prompt: '---Selecione un producto---'}, {class: 'form-control-sm'}))%>";
+$('#productos').html(html);	

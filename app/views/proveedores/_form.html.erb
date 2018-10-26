@@ -1,0 +1,74 @@
+<%= form_for(@proveedores) do |f| %>
+  <table class="table table-hover table-sm">
+  <fieldset>
+    <% @proveedores.errors.full_messages.each do |error_message| %>
+      <%=  error_message %>
+    <% end %>
+        <tr>
+          <td width="25%"><b><%= f.label :nombre, 'Nombre*'%></b> <br> <small>Identidad de la persona FÍSICA o
+            <br>MORAL que otorga el servicio</small> </td>
+          <td><br><%= f.text_field :nombre, placeholder: 'Ingresar nombre del proveedor', class: 'form-control',maxlength: 60, size:60,
+                                   id: 'nombreP',onkeypress: 'return validarNombre(event);',type: 'text' %><small id="msg_nombreP"></small></td>
+        </tr>
+        <tr>
+          <td><b><%= f.label :contacto, 'Contacto*'%></b> <br><small> Persona quien atiende las solicitudes <br>del servicio</small></td>
+          <td><br><%= f.text_field :contacto, placeholder: 'Ingresar el contacto', class: 'form-control',id: 'contacto', size:60,
+                                   min_length: 5,maxlength: 60, onkeypress: 'return validarNombre(event);',type:'text'%>
+            <small id="msg_contacto"></small> </td>
+        </tr>
+        <tr>
+          <td><b><%= f.label :servicio, 'Servicio*'%></b><br><small>Clasificación de los servicios que provee </small> </td>
+          <td><%= f.text_field :servicio,placeholder:'Ingresar nombre del servicio',class:'form-control',id:'servicio',
+                               type: 'text', min_length:5, maxlength: 60%><small id="msg_servicio"></small> </td>
+        </tr>
+        <tr>
+          <td><b><%= f.label :rfc, 'RFC' %></b><br><small>Registro Federal de Contribuyentes<br>del Proveedor</small></td>
+          <td><br><%= f.text_field :rfc, placeholder: 'Ingresar RFC', class: 'form-control',type: 'text',id:'rfc', maxlength: 13%>
+            <br> <small id="rfcmensaje"></small> </td>
+        </tr>
+        <tr>
+          <td><b><%= f.label :email, 'Correo Electrónico'%></b> <br><small>Correo Electrónico
+            propio del proveedor <br>para su futura comunicación</small></td>
+          <td><br><%= f.text_field :email, placeholder: 'Ingresar correo electrónico',class: 'form-control', id: 'email1'%> <small id="msemail"></small> </td>
+        </tr>
+        <tr>
+          <td><b><%= f.label :telefono, 'Teléfono' %></b> <br><small>Registro del Teléfono del
+            proveedor <br> para su futura comunicación</small></td>
+          <td><br><%= f.text_field :telefono, placeholder: 'Ingresar el teléfono', class: 'form-control',
+                                   onkeypress: 'return validarTelefono(event)',type: 'text'%></td>
+        </tr>
+        <tr>
+          <td><b> <%= f.label :direccion, 'Dirección' %> </b><br><small>Ubicación fiscal de la sucursal</small></td>
+          <td><%= f.text_field :direccion, placeholder: 'Ingresar dirección', class: 'form-control'%></td>
+        </tr>
+        <tr>
+          <td><b><%= f.label :ciudad,'Ciudad' %></b> <br><small>Municipio donde se ubica</small></td>
+          <td><%= f.text_field :ciudad, placeholder: 'Ingresar ciudad', class: 'form-control',type: 'text'%></td>
+        </tr>
+        <tr>
+          <td><b><%= f.label :estado, 'Estado ' %></b> <br><small >Entidad federativa</small></td>
+          <td><%= f.select :estado, @estados, {:select =>@estado},  {class: 'custom-select'}%> </td>
+        </tr>
+        <tr>
+          <td><b><%= f.label :codigo_Postal, 'Código Postal' %></b></td>
+          <td><%= f.text_field :codigo_Postal,placeholder:'Ingresar código postal',class:'form-control',
+                               onkeypress: 'return validar_cp(event)',type: 'text'%></td>
+        </tr>
+  </fieldset>
+  </table>
+  <table class="table table-sm">
+    <tr>
+      <!--botón nombre, cambia respecto a la función que hace-->
+      <td align="center"><br><small class="form-text text-muted">Nota: Los campos marcados con * son obligatorios</small>
+        <br>
+        <!-- funcion cancelar-->
+        <% if nombre=="Crear Proveedor" %>
+          <%= f.submit 'Guardar', class: 'btn btn-primary btn-sm',onclick: 'return validarFormularioProveedor();',id:'btnGuardar'%>
+        <% else %>
+          <%= f.submit 'Guardar Cambios', class: 'btn btn-primary btn-sm',onclick: 'return validarFormularioProveedor();', id: 'btnGuardar'%>
+        <% end %>
+        <%= link_to 'Cancelar', '#', class: 'btn btn-danger btn-sm', data: {toggle: 'modal', target: '#ModalForm'} %>
+      </td>
+    </tr>
+  </table>
+<% end %>

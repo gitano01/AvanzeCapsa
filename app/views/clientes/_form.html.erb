@@ -1,0 +1,68 @@
+<%= form_for(@clientes) do |f| %>
+  <table class="table table-hover">
+    <fieldset>
+      <% @clientes.errors.full_messages.each do |error_message| %>
+        <%=  error_message %>
+      <% end %>
+      <tr>
+        <td><b><%= f.label :nombre, 'Nombre*' %></b> <br><small class="form-text text-muted">Nombre que identifica al
+          cliente</small></td>
+        <td><%= f.text_field :nombre, placeholder: 'Ingresar nombre del cliente',class: 'form-control',id: 'nombreC',
+                             type: 'text', onkeypress: 'return validarNombre(event);', maxlength: 60%><small id="msg_nombreC"></small></td>
+
+      </tr>
+      <tr>
+        <td><b><%= f.label :rfc, 'RFC' %></b><br><small class="form-text text-muted">Registro Federal de Contribuyentes
+          <br>que identifica al cliente como único</small></td>
+        <td><br><%= f.text_field :rfc, placeholder: 'Ingresar RFC', class: 'form-control',maxlength: 13,
+                                 type: 'text', id: 'rfc'%><small id="rfcmensaje"></small> </td>
+      </tr>
+      <tr>
+        <td><b><%= f.label :email, 'Correo Electrónico'%></b><br><small  class="form-text text-muted">Correo Electrónico
+          propio del cliente <br>para su futura comunicación</small></td>
+        <td><br><%= f.text_field :email, placeholder: 'Ingresar correo electrónico', class: 'form-control',id: 'email1'%><small id="msemail"></small></td>
+      </tr>
+      <tr>
+        <td><b><%= f.label :telefono, 'Teléfono' %></b><br><small class="form-text text-muted">Registro del Teléfono del
+          cliente para <br> su futura comunicación</small></td>
+        <td><br><%= f.text_field :telefono, placeholder: 'Ingresar el teléfono', class: 'form-control',
+                                 onkeypress: 'return validarTelefono(event)',type: 'text'%> </td>
+      </tr>
+      <tr>
+        <td><b><%= f.label :direccion, 'Dirección' %></b><small class="form-text text-muted">Ubicación fiscal de la
+          sucursal</small> </td>
+        <td><%= f.text_field :direccion, placeholder: 'Ingresar dirección',class: 'form-control'%></td>
+      </tr>
+      <tr>
+        <td><b><%= f.label :ciudad, 'Ciudad' %></b><small class="form-text text-muted">Municipio donde se ubica</small></td>
+        <td><%= f.text_field :ciudad, placeholder: 'Ingresar Ciudad', class: 'form-control',type: 'text'%></td>
+      </tr>
+      <tr>
+        <td><b><%= f.label :estado, 'Estado '%></b><small class="form-text text-muted">Entidad federativa</small></td>
+        <td><br><%= f.select :estado, @estados, {:select =>@estado },{class: 'custom-select'}%></td>
+      </tr>
+      <tr>
+        <td><b><%= f.label :codigo_Postal,'Código Postal' %></b></td>
+        <td><%= f.text_field :codigo_Postal, placeholder: 'Ingresar código postal',class: 'form-control',
+                             onkeypress: 'return validar_cp(event)',type: 'text'%></td>
+      </tr>
+    </fieldset>
+  </table>
+  <table class="table table-responsive-sm">
+    <tr>
+      <td align="center">
+        <!--botón nombre, cambia respecto a la acción de deba hacer crear o modificar-->
+        <br>
+        <small class="form-text text-muted">Nota: Los campos marcados con * son obligatorios</small>
+        <br>
+        <!-- funcion cancelar-->
+        <% if nombre=="Crear Cliente" %>
+          <%= f.submit 'Guardar', class: 'btn btn-primary btn-sm', onclick: 'return validarFormularioCliente();',id:'btnGuardar'%>
+        <% else %>
+          <%= f.submit 'Guardar Cambios', class: 'btn btn-primary btn-sm', onclick: 'return validarFormularioCliente();',id:'btnGuardar'%>
+        <% end %>
+        <%= link_to 'Cancelar', '#', class: 'btn btn-danger btn-sm', data: {toggle: 'modal', target: '#ModalForm'} %>
+      </td>
+    </tr>
+  </table>
+<% end %>

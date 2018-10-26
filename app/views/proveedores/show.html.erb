@@ -1,0 +1,58 @@
+<article>
+  <h4 align="center"> Vista del Proveedor </h4>
+  <table class="table ">
+
+    <tr>
+      <td width="30%" ><b> Nombre</b> <br><small >Identidad de la persona FÍSICA o
+        <br>MORAL que otorga el servicio</small> </td>
+      <td colspan="3"> <%= @proveedores.nombre %></td>
+    </tr>
+    <tr>
+      <td ><b> Contacto</b> <br><small> Persona quien atiende las
+        <br>solicitudes del servicio</small> </td>
+      <td > <%= @proveedores.contacto %></td>
+    </tr>
+    <tr>
+      <td ><b>Correo Electrónico</b><br><small >Correo Electrónico propio del
+        proveedor <br>para su futura comunicación</small> </td>
+      <td  colspan="3"> <%= @proveedores.email %></td>
+    </tr>
+    <tr>
+      <td ><b> Teléfono(s) </b> <br> <small >Registro del Teléfono del proveedor
+        <br> para su futura comunicación</small></td>
+      <td colspan="3"> <%= @proveedores.telefono %></td>
+    </tr>
+    <br>
+    <tr>
+      <td width="50"><b> Servicio </b> <br> <small >Clasificaión de los servicios<br>que provee </small></td>
+      <td width="50"> <%= @proveedores.servicio %></td>
+      <td width="50"><b> RFC</b> <br><small>Registro Federal de Contribuyentes
+        <br>del Proveedor</small></td>
+      <td width="50"> <%= @proveedores.rfc %></td>
+    </tr>
+
+    <tr>
+      <td ><b>Dirección</b><br><small>Ubicación fiscal de la sucursal</small></td>
+      <td > <%= @proveedores.direccion %></td>
+      <td ><b> Código Postal </b></td>
+      <td > <%= @proveedores.codigo_Postal %></td>
+    </tr>
+    <tr>
+      <td ><b> Ciudad</b> <br><small >Mnicipio donde se ubuca </small> </td>
+      <td > <%= @proveedores.ciudad %></td>
+      <td ><b>Estado</b> <br><small >Entidad federativa</small> </td>
+      <td > <%= @proveedores.estado %></td>
+    </tr>
+
+  </table>
+  <br/>
+  <table class="table table-responsive-sm">
+    <tr>
+      <td align="center">
+        <%= link_to 'Modificar', edit_proveedor_path(@proveedores), class: 'btn btn-primary btn-sm'%>
+        <%= link_to 'Nuevo', new_proveedor_path, class: 'btn btn-primary btn-sm' %>
+        <%= link_to 'Regresar', proveedores_path, class: 'btn btn-primary btn-sm'%>
+      </td>
+    </tr>
+      </table>
+</article>
