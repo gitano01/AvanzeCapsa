@@ -1,0 +1,79 @@
+<div class="panel panel-info">
+  <div class="panel-heading"><h4 class="text-center">Catálogo de Productos</h4></div>
+  <div class="panel-body">
+    <br>
+    <%if @categorias.size >0 %>
+      <%if @unidades.size > 0 %>
+        <% if @productos.size > 0 %>
+        <table class="table table-sm table-bordered">
+          <thead class="bg-primary text-light">
+          <th>Nombre</th>
+          <th>Categorías</th>
+          <th>Precio</th>
+          <th>Precio Costo</th>
+          <th>IVA</th>
+          <th colspan="3">Opciones</th>
+          </thead>
+          <tbody>
+          <% @productos.each do |producto| %>
+            <tr>
+              <td><%= producto.nombre %></td>
+              <td>
+                <%i=0 %>
+                <% producto.categorias.each do |c| #función para tener la sintaxis correcta  %>
+                  <% unless (i+1)==producto.categorias.length  %>
+                    <%=c.nombre + ","%>
+                  <% else %>
+                    <%=c.nombre + "."%>
+                  <%end%>
+                  <%i=i+1 %>
+                <%end%></td>
+              <td><%= number_to_currency(producto.precio) %></td>
+              <td><%= number_to_currency(producto.precio_costo) %></td>
+              <td class="text-center"><%= check_box_tag 'IVA','IVA',checked = producto.iva,{:disabled =>'true'} %></td>
+              <td class="text-center"><%= link_to (fa_icon 'eye'), producto_path(producto),title: 'Mostrar' %></td>
+              <td class="text-center"><%= link_to (fa_icon 'edit'), edit_producto_path(producto),title: 'Editar' %></td>
+              <td class="text-center">
+                <%= link_to (fa_icon 'trash'), '#', data: { toggle: 'modal', target: '#ModalIndex' } ,
+                            onclick:('cambiarIdYNombre('+producto.id.to_s+',"'+@controlador.to_s+'","'+ @controladorSingular.to_s+'","'+ producto.nombre+'");return false;'),
+                            title: 'Eliminar' %>
+              </td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+          <table class="table text-center" >
+            <tr>
+              <td><%= link_to 'Nuevo', new_producto_path, class: 'btn btn-primary btn-sm' %></td>
+            </tr>
+          </table>
+
+          <% else %>
+          <br>
+          <h5 align="center"><%= "No existen productos actualmente" %> </h5>
+          <table class="table text-center" >
+            <tr>
+              <td><%= link_to 'Nuevo', new_producto_path, class: 'btn btn-primary btn-sm' %></td>
+            </tr>
+          </table>
+          <% end %>
+      <% else %>
+        <br>
+        <h5 align="center"><%= "No existen unidades actualmente, necesitas al menos una unidad" %> </h5>
+        <table class="table text-center" >
+          <tr>
+            <td><%= link_to 'Nueva unidad', new_unidad_path, class: 'btn btn-primary btn-sm' %></td>
+          </tr>
+        </table>
+      <%end%>
+    <%else %>
+      <br>
+      <h5 align="center"><%= "No existen categorías actualmente, necesitas al menos una categoría" %> </h5>
+      <table class="table text-center" >
+        <tr>
+          <td><%= link_to 'Nueva categoría', new_categoria_path, class: 'btn btn-primary btn-sm' %></td>
+        </tr>
+      </table>
+    <%end %>
+  </div>
+</div>

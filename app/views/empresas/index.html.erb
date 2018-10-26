@@ -1,0 +1,58 @@
+<h4 class="text-center">Datos de la empresa</h4><br>
+<div class="row">
+  <%unless @empresa.nil? %>
+    <%# @empresas.each do |empresa| %>
+      <div class="col-md-6">
+        <table class="table table-hover">
+          <tr>
+            <td><b>Nombre de la empresa:</b><br>
+              <small>Nombre de la empresa</small></td>
+            <td><%= @empresa.nombre %></td>
+          </tr>
+          <tr>
+            <td><b>RFC:</b><br>
+              <small>Registro Federal de Contribuyentes de la empresa</small></td>
+            <td><%= @empresa.rfc %></td>
+          </tr>
+          <tr>
+            <td><b>IVA:</b><br>
+              <small>Porcentaje de IVA aplicado a los productos</small></td>
+            <td><%= @empresa.iva %></td>
+          </tr>
+        </table>
+      </div>
+      <div class="col-md-6">
+        <table class="table table-hover">
+          <tr>
+            <td><b>Logotipo:</b></td>
+          </tr>
+          <tr>
+            <td><%= image_tag @empresa.imagen.url(:thumb) %></td>
+          </tr>
+        </table>
+      </div>
+      <div class="col-md-12 text-center">
+        <table class="table">
+          <tr>
+            <td>
+              <%= link_to 'Modificar', edit_empresa_path(@empresa),class: 'btn btn-primary btn-sm' %>
+              <%= link_to 'Regresar', configuraciones_path, class: 'btn btn-primary btn-sm'%>
+            </td>
+          </tr>
+        </table>
+      </div>
+    <% #end %>
+  <%else%>
+    <br/>
+    <table class="table text-center">
+      <tr>
+        <td><h3>Registrar empresa</h3></td>
+      </tr>
+      <tr>
+        <td><%= link_to 'Registrar empresa', new_empresa_path, class: 'btn btn-primary btn-sm' %>
+          <%= link_to 'Regresar', configuraciones_path, class: 'btn btn-primary btn-sm'%></td>
+      </tr>
+    </table>
+  <% end %>
+</div>
+

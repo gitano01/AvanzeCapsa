@@ -1,0 +1,43 @@
+    <h4 class="text-center">Catálogo de Tipos de Pagos</h4><br>
+    <% if @tipopagos.size > 0 %>
+      <table class="table table-bordered table-sm table-light" >
+        <thead class="bg-primary text-light">
+            <th > Nombre</th>
+            <th colspan="2" class="text-center" width="10%"> Opciones</th>
+        </thead>
+        <tbody>
+          <% @tipopagos.each do |tipopago| %>
+
+              <% if tipopago.nombre == "EFECTIVO" %>
+                <tr>
+                  <td> <%= tipopago.nombre %> </td>
+                  <td colspan="2" class="text-center"><%= "------" * 2 %> </td>
+                </tr>
+              <% else %>
+                <tr>
+                  <td> <%= tipopago.nombre %> </td>
+                  <td align="center">
+                    <%= link_to edit_tipos_pago_path(tipopago), title: 'Modificar' do %>
+                      <%= fa_icon "edit" %>
+                    <% end %>
+                  </td>
+                  <td align="center">
+                    <%= link_to (fa_icon 'trash'), '#',title: 'Eliminar', data: { toggle: 'modal', target: '#ModalIndex' },
+                                onclick:('cambiarIdYNombre('+tipopago.id.to_s+',"'+@controlador.to_s+'","'+ @controladorSingular.to_s+'","'+ tipopago.nombre+'");return false;') %>
+                  </td>
+                </tr>
+              <%end%>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <%@tipopagos.create(nombre: "EFECTIVO")%>
+      <br/>
+    <% end %>
+    <table class="table text-center">
+      <tr>
+        <td>
+          <%= link_to 'Nuevo', new_tipos_pago_path, class: 'btn btn-primary btn-sm' %>
+        </td>
+      </tr>
+    </table>

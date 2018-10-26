@@ -1,0 +1,68 @@
+
+<h5 class="text-center">Datos del empleado</h5><br/>
+<table class="table table-sm">
+	<tr>
+		<td width="35%"><label>Nombre*</label><br/><small>Nombre del empleado</small></td>
+			<td><%= text_field :empleado, :nombre_completo, class: 'form-control', autofocus: true, maxlength: 20%>
+			<small id="nombre"></small></td>
+		</tr>
+		<tr>
+			<td width="35%"><label>Apellido paterno*</label><br/><small>Apellido paterno del empleado</small></td>
+			<td><%= text_field :empleado, :apellido_paterno, class: 'form-control', maxlength: 20%>
+			<small id="app_p"></small></td>
+		</tr>
+		<tr>
+			<td width="35%"><label>Apellido materno*</label><br/><small>Apellido materno del empleado</small></td>
+			<td><%= text_field :empleado, :apellido_materno, class: 'form-control', maxlength: 20%>
+			<small id="app_m"></small></td>
+		</tr>
+		<tr>
+			<td width="35%"><label>RFC*</label><br/><small>Registro Federal de Contribuyentes del empleado</small></td>
+			<td><%= text_field :empleado, :rfc, class: 'form-control mayuscula', maxlength: 13, onkeyup:"mayuscula(this)"%>
+			<small id="rfc"></small></td>
+		</tr>
+		<tr>
+			<td width="35%"><label>Fecha de nacimiento*</label><br/><small>Fecha de nacimiento del empleado</small></td>
+			<td>
+				<div class="input-group">
+					<%= text_field :empleado, :fecha_nacimiento, class: 'form-control', id: 'fecha_nacimiento', readonly: true%>
+					<div class="input-group-append">
+						<div class="input-group-text">
+							<%= fa_icon 'calendar', class: 'cursor text-danger' %>
+						</div>
+					</div>
+				</div>
+				<small id="fecha_n"></small>
+			</td>
+		</tr>
+		<tr>
+			<td width="35%"><label>Fecha de registro*</label><br><small>Fecha de registro del empleado al sistema</small></td>
+			<td>
+				<div class="input-group">
+					<%= text_field :empleado, :fecha_registro, class: 'form-control', id: 'fecha_registro', readonly: true%>
+					<div class="input-group-append">
+						<span class="input-group-text">
+							<%= fa_icon 'calendar', class: 'cursor text-danger' %>
+						</span>
+					</div>
+				</div>
+				<small id="fecha_r"></small>
+			</td>
+		</tr>
+		<tr>
+			<td width="35%"><label>Dirección</label><br/><small>Ubicación fiscal de la sucursal</small></td>
+			<td><%= text_field :empleado, :direccion, class: 'form-control mayuscula', maxlength: 60%></td>
+		</tr>
+		<tr>
+			<td width="35%"><label>Ciudad</label><br/><small>Municipio donde se ubica</small></td>
+			<td><%= text_field :empleado, :ciudad, class: 'form-control mayuscula', maxlength: 50%></td>
+		</tr>
+		<tr>
+			<td width="35%"><label>Estado</label><br/><small>Entidad federativa</small></td>
+			<td><%= select :empleado, :estado, @estados, {select: @estados},{class: 'custom-select'}%></td>
+		</tr>
+		<tr>
+			<td width="35%"><label>Código postal</label></td>
+			<td><%= text_field :empleado, :codigo_postal, class: 'form-control', onkeypress: 'return validar_cp(event)', maxlength: 8%></td>
+		</tr>		
+</table>

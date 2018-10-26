@@ -1,0 +1,43 @@
+    <h4 class="text-center">Catálogo de Clientes</h4><br>
+    <% if @clientes.size >0 %>
+      <table class="table table-sm table-bordered">
+        <thead class="bg-primary text-light">
+        <tr>
+          <th>Nombre</th>
+          <th>RFC</th>
+          <th>Teléfono(s)</th>
+          <th colspan="3" class="text-center" width="15%">Opciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <%@clientes.each do |cliente| %>
+          <tr>
+              <td> <%= cliente.nombre %></td>
+              <td> <%= cliente.rfc %></td>
+              <td><%= cliente.telefono %></td>
+              <td align="center"><%= link_to cliente, title: 'Mostrar' do %>
+                  <%= fa_icon "eye" %>
+                <% end %></td>
+              <td align="center"><%= link_to edit_cliente_path(cliente),title: 'Modificar' do %>
+                  <%= fa_icon "edit" %>
+                <% end %></td>
+              <td align="center">
+                <%= link_to (fa_icon 'trash'), '#',title: 'Eliminar', data: { toggle: 'modal', target: '#ModalIndex' },
+                            onclick:('cambiarIdYNombre('+cliente.id.to_s+',"'+@controlador.to_s+'","'+ @controladorSingular.to_s+'","'+ cliente.nombre+'");return false;') %></td>
+
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <br>
+      <h5 align="center"><%= "No existe cliente actualmente" %> </h5>
+    <% end %>
+    <br/>
+    <table class="table">
+      <tr>
+        <td align="center"><%= link_to 'Nuevo', new_cliente_path, class: 'btn btn-primary btn-sm' %></td>
+      </tr>
+    </table>
+
+

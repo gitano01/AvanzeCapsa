@@ -1,0 +1,84 @@
+<h4 class="text-center">Vista de Empleado-Usuario</h4>
+  	</br>
+	<div class="row">
+		<div class="col-md-7">
+			<h5 class="text-center">Datos del Empleado</h5>
+			</br>
+			<table class="table table-sm table_show">
+				<tr>
+					<td><b>Nombre</b><br/><small>Nombre del empleado</small></td>
+					<td><%= @empleado.nombre_completo %></td>
+				</tr>
+				<tr>
+					<td><b>Apellido paterno</b><br/><small>Apellido paterno del empleado</small></td>
+					<td><%= @empleado.apellido_paterno %></td>
+				</tr>
+				<tr>
+					<td><b>Apellido materno</b><br/><small>Apellido materno del empleado</small></td>
+					<td><%= @empleado.apellido_materno %></td>
+				</tr>
+				<tr>
+					<td><b>RFC</b><br/><small>Registro Federal de Contribuyentes 
+del empleado</small></td>
+					<td><%= @empleado.rfc %></td>
+				</tr>
+				<tr>
+					<td><b>Fecha de Nacimiento</b><br/><small>Fecha de nacimiento del empleado</small></td>
+					<td><%= @empleado.fecha_nacimiento %></td>
+				</tr>
+				<tr>
+					<td><b>Fecha de registro</b><br/><small>Fecha de registro del empleado al sistema</small></td>
+					<td><%= @empleado.fecha_registro %></td>
+				</tr>
+				<tr>
+					<td><b>Dirección</b><br/><small>Ubicación fiscal de la sucursal</small></td>
+					<td><%= @empleado.direccion %></td>
+				</tr>
+				<tr>
+					<td><b>Ciudad</b><br/><small>Municipio donde se ubica</small></td>
+					<td><%= @empleado.ciudad %></td>
+				</tr>
+				<tr>
+					<td><b>Estado</b><br/><small>Entidad federativa	</small></td>
+					<td><%= @empleado.estado %></td>
+				</tr>
+				<tr>
+					<td><b>Código postal </b></td>
+					<td><%= @empleado.codigo_postal %></td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-md-5">
+			<h5 class="text-center">Datos del Usuario</h5>
+			</br>
+			<% if @empleado.usuarios.any? %> 
+			  <% @empleado.usuarios.each do |usuario| %> 
+			  	<table class="table table-sm table_show">
+			  		<tr>
+			  			<td><b>Nombre de usuario</b></br><small>Nombre único que identifica al usuario</small></td>
+			  			<td><%= usuario.usuario %></td>
+			  		</tr>
+			  		<tr>
+			  			<td><b>Email</b></br><small>Dirección de correo electrónico</small></td>
+			  			<td><%= usuario.email %></td>
+			  		</tr>
+			  		<tr>
+			  			<td><b>Rol</b></br><small>Nivel de privilegios del usuario</small></td>
+			  			<td><%= usuario.tipo %></td>
+			  		</tr>
+			  	</table>
+			  <% end %> 
+			<% end %>
+		</div>
+	</div>
+	<br>
+	<table class="table_show">
+		<tr>
+			<td><%= link_to 'Modificar', edit_empleado_path(@empleado), class: 'btn btn-sm btn-primary' %>  </td>
+			<td><%= link_to 'Nuevo', new_empleado_path, class: 'btn btn-sm btn-primary' %>  </td>
+			<td><%= link_to 'Regresar', empleados_path, class: 'btn btn-sm btn-primary' %></td>
+		</tr>
+	</table>
+	<!--end-->
+
+

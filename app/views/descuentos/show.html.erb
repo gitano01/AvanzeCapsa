@@ -1,0 +1,56 @@
+
+<h4 class="text-center">Catálogo de Promociones y Descuentos</h4><br/>
+<div class="row">
+  <div class="col-md-6">
+    <table class="table table-sm">
+      <tr>
+        <td width="30%"><label>Nombre</label><br/><small>Nombre o descripción que identifica a la promoción</small></td>
+        <td><%= @descuento.nombre %></td>
+      </tr>
+      <tr>
+        <td width="30%"><label>Monto</label><br/><small>Porcentaje de descuento (%)</small></td>
+        <td><%= @descuento.monto %> %</td>
+      </tr>
+      <tr>
+        <td width="30%"><label>Fecha inicial</label><br/><small>Fecha de inicio</small></td>
+        <td><%= @descuento.fecha_inicial %></td>
+      </tr>
+      <tr>
+        <td width="30%"><label>Fecha final</label><br/><small>Fecha en que termina</small></td>
+        <td><%= @descuento.fecha_final %></td>
+      </tr>
+    </table>
+  </div>
+  <div class="col-md-6">
+    <table class="table table-sm">
+      <tr>
+        <td><label>Productos</label><br/><small>Lista de Productos a los que se le aplica la promoción</small></td>
+      </tr>
+    </table>
+    <table class="table table-bordered table-hover table-sm">
+      <thead class="bg-primary text-white">
+        <th class="text-center" width="40%">Código</th>
+        <th class="text-center" width="60%">Productos</th>
+      </thead>
+      <tbody>
+        <% @descuento.productos.each do |producto| %>
+          <tr>
+            <td><%= producto.codigo %></td>
+            <td><%= producto.nombre %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<table class="table">
+  <tr>
+    <td class="text-center">
+      <%= link_to 'Modificar', edit_descuento_path(@descuento), class: 'btn btn-sm btn-primary' %>
+      <%= link_to 'Nueva', new_descuento_path, class: 'btn btn-sm btn-primary' %>
+      <%= link_to 'Regresar', descuentos_path, class: 'btn btn-sm btn-primary' %>
+    </td>
+  </tr>
+</table>
+

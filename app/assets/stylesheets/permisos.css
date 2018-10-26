@@ -1,0 +1,30 @@
+/*
+  Place all the styles related to the matching controller here.
+  They will automatically be included in application.css.
+*/
+
+.botones{
+	margin-top: 12%;
+}
+
+.guardado{
+	color: #0AC0AD;
+}
+
+table{
+	border-collapse: collapse;
+}
+
+.cursor{
+	cursor: pointer;
+}
+
+.content {
+	max-height: 90%!important;
+	min-height: 90%!important;
+	margin: 0 auto;
+	width: auto;
+	border: 1px solid #ddd;
+	background: #F4F4F4;
+	overflow: auto;
+}

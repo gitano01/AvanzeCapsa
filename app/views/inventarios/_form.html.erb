@@ -1,0 +1,33 @@
+<%= form_for (@inventario) do |f|%>
+  <div class="col-md-12 align-content-center">
+    <div class="alert alert-danger collapse alert alert-success" role="alert"></div>
+    <h6 class="text-center">Datos del Inventario</h6>
+    <% @inventario.errors.full_messages.each do |error_mesage| %>
+      <%= error_mesage %>
+    <% end %>
+    <table class="table table-hover">
+      <tr class="field">
+        <td width="25%"><%= f.label :nombre, 'Nombre*' %><br><small>Nombre que identifica al inventario</small></td>
+        <td><%= f.text_field :nombre, placeholder: 'Ingrese el Nombre del Inventario', class: 'form-control' ,
+                             onkeypress: 'return validarNombre(event)', id: 'nombreInventario'%>
+          <small id="msg_nombreInventario"></small></td>
+      </tr>
+    </table>
+    <div class="text-center">
+      <table class="table text-center">
+        <tr>
+          <td><br>
+            <small class="form-text text-muted">Nota: los campos marcados con * son obligatorios</small><br>
+
+            <% if nombre=="Nuevo inventario" %>
+              <%= f.submit 'Guardar', class: 'btn btn-sm btn-primary', id: 'btnGuardar', onclick: 'return validarFormularioInventario();'%>
+            <% else %>
+              <%= f.submit 'Guardar Cambios', class: 'btn btn-sm btn-primary', id: 'btnGuardar', onclick: 'return validarFormularioInventario();'%>
+            <% end %>
+            <%= link_to 'Cancelar', '#', class: 'btn btn-danger btn-sm', data: {toggle: 'modal', target: '#ModalForm'} %>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+<% end %>

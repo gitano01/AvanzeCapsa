@@ -1,0 +1,42 @@
+<br/>
+<%= form_for @caja_registradora  do |f|  %>
+	<table class="table">
+		<tr>
+			<td width="25%">
+				<label>Nombre de la caja registradora*</label><br><small>Nombre que identifica a la caja registradora</small>
+			</td>
+	         <td>
+	         	<%= f.text_field :nombre, placeholder: 'Ingrese el Nombre ', class: 'form-control', id: 'nombreCaja', onkeypress: 'return validarNombre(event);', maxlength: 20, autofocus: true%>
+	         	<small id="msg_nombreCaja"></small>
+	      	</td>
+		</tr>
+		<tr>
+			<td width="25%">
+				<label>Monto Inicial*</label><br> <small>Cantidad monetaria con la que se abre la caja por defecto</small>
+			</td>
+	        <td>
+	            <div class="input-group mb-3">
+	              <div class="input-group-prepend">
+	                <span class="input-group-text">$</span>
+	              </div>
+	              <%= f.text_field :monto_inicial, placeholder: 'Ingrese el monto inicial', class: 'form-control', id: 'montoInicial', maxlength: 9, onkeypress: 'return validarMontoInicial(event);'%>
+	            </div>
+	            <small id="msg_montoInicial"></small>
+	        </td>
+		</tr>
+	</table>
+	<table class="table">
+      <tr>
+        <td align="center">
+          <small class="form-text">Nota: Los campos marcados con * son obligatorios</small>
+          <br>
+          <% if nombre=="new" %>
+            <%= f.submit 'Guardar', class: 'btn btn-primary btn-sm', id: 'btnGuardar', :onclick => 'return validarFormularioCajaRegistradora()' %>
+          <% else %>
+            <%= f.submit 'Guardar Cambios', class: 'btn btn-primary btn-sm', id: 'btnGuardar', :onclick => 'return validarFormularioCajaRegistradora()' %>
+          <% end %>
+          <%= link_to 'Cancelar', '#', class: 'btn btn-danger btn-sm',data: {toggle: 'modal', target: '#ModalForm'} %>
+        </td>
+      </tr>
+    </table>
+<% end %>

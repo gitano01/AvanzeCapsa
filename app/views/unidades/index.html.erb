@@ -1,0 +1,35 @@
+
+<div class="panel panel-info">
+  <div class="panel-heading"><h4 class="text-center">Catálogo de Unidades</h4></div>
+  <div class="panel-body">
+    <br>
+    <% if @unidades.size > 0 %>
+    <table class="table table-sm table-bordered">
+      <thead class="bg-primary text-light">
+      <th width="80%">Nombre</th>
+      <th colspan="2">Opciones</th>
+      </thead>
+      <tbody>
+      <% @unidades.each do |unidad| %>
+        <tr>
+          <td><%= unidad.nombre %></td>
+          <td class="text-center"><%= link_to ( fa_icon 'edit'), edit_unidad_path(unidad),title: 'Editar' %></td>
+          <td class="text-center"><%= link_to (fa_icon 'trash'), '#', data: { toggle: 'modal', target: '#ModalIndex' },
+                                              onclick:('cambiarIdYNombre('+unidad.id.to_s+',"'+@controlador.to_s+'","'+ @controladorSingular.to_s+'","'+ unidad.nombre+'");return false;'),
+                                              title: 'Eliminar'
+          %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+    <% else %>
+      <br>
+      <h5 align="center"><%= "No existen unidades actualmente" %> </h5>
+    <% end %>
+    <table class="table text-center" >
+      <tr>
+        <td><%= link_to 'Nueva', new_unidad_path, class: 'btn btn-primary btn-sm' %></td>
+      </tr>
+    </table>
+  </div>
+</div>

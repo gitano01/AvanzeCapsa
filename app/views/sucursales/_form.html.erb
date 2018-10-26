@@ -1,0 +1,59 @@
+
+<%= form_for (@sucursal) do |f|%>
+  <% @sucursal.errors.full_messages.each do |error_mesage| %>
+    <%= error_mesage %>
+  <% end %>
+    <table class="table table-hover">
+      <tr class="field">
+        <td width="25%"> <%= f.label :nombre, 'Nombre*' %><br><small>Nombre que identifica a la sucursal</small></td>
+        <td><%= f.text_field :nombre, placeholder: 'Nombre de la sucursal', class: 'form-control',
+             onkeypress: 'return validarNombre(event);', id: 'nombre', maxlength: 50, focus: true%>
+          <small id="msg_nombre"></small></td>
+      </tr>
+      <tr>
+        <td><%= f.label :telefonos, 'Teléfono(s)*' %><br><small>Teléfono(s) de la sucursal</small></td>
+        <td><%= f.text_field :telefonos, placeholder: 'Número(s) de teléfono(s) de la sucursal',
+                             class: 'form-control', onkeypress: 'return validarTelefono(event)', id: 'telefonos',maxlength: 80%>
+          <small id="msg_telefonos"></small></td>
+      </tr>
+      <tr>
+        <td><%= f.label :iniciales, 'Iniciales*' %><br><small>Iniciales que identifican a la Sucursal(4 caracteres)</small></td>
+        <td><%= f.text_field :iniciales, placeholder: 'Iniciales de la sucursal', class: 'form-control',
+                             onkeypress: 'return validarIniciales(event)', maxlength: 4, id: 'iniciales'  %>
+          <small id="msg_iniciales"></small></td>
+      </tr>
+      <tr>
+        <td><%= f.label :direccion, 'Dirección*' %><br><small>Ubicación fiscal de la sucursal</small></td>
+        <td><%= f.text_field :direccion, placeholder: 'Dierección de la sucursal', class: 'form-control',
+                            id: 'direccion',maxlength: 100%>
+          <small id="msg_direccion"></small></td>
+      </tr>
+      <tr>
+        <td><%= f.label :ciudad, 'Ciudad' %><br><small>Municipio donde se ubica la sucursal</small></td>
+        <td><%= f.text_field :ciudad, placeholder: 'Ciudad de la Sucursal', class: 'form-control',maxlength: 50%></td>
+      </tr>
+      <tr>
+        <td><%= f.label :estado, 'Estado' %><br><small>Entidad federativa</small></td>
+        <td><%= f.select :estado, @estados,{:select => @estados},{class: 'custom-select'}%></td>
+      </tr>
+      <tr>
+        <td><%= f.label :codigo_postal, 'Código Postal' %><br><small>Código Postal de la Ciudad donde se ubica la sucursal</small></td>
+        <td><%= f.text_field :codigo_postal, placeholder: 'Código postal', class: 'form-control', id: 'codigo',
+                             onkeypress: 'return validar_cp(event)', maxlength: 5%>
+          <small id="msg_codigo"></small></td>
+      </tr>
+    </table>
+      <table class="table text-center table-responsive-sm">
+        <tr>
+          <td><br>
+            <small class="form-text text-muted">Nota: los campos marcados con * son obligatorios</small><br>
+            <% if nombre=="Nueva sucursal" %>
+              <%= f.submit 'Guardar', class: 'btn btn-primary btn-sm ', onclick: 'return validarFormularioSucursal();', id: 'btnGuardar' %>
+            <% else %>
+              <%= f.submit 'Guardar Cambios', class: 'btn btn-primary  btn-sm ', onclick: 'return validarFormularioSucursal();', id: 'btnGuardar'%>
+            <% end %>
+            <%= link_to 'Cancelar', '#', class: 'btn btn-danger btn-sm', data: {toggle: 'modal', target: '#ModalForm'} %>
+          </td>
+        </tr>
+      </table>
+  <% end %>

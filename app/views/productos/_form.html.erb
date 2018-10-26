@@ -1,0 +1,222 @@
+<%= form_for @producto do |f| %>
+  <div class="col-md-12 align-content-center">
+    <table class="table table-hover">
+      <tr class="field">
+        <td>
+          <%=f.label 'Nombre*' %>
+          <br><small> Nombre que identifica el producto</small>
+        </td>
+        <td>
+          <%=f.text_field :nombre,id: 'nombre',placeholder:'Ingrese el nombre del producto' ,class: 'form-control' %>
+          <small id="msg_nombre"></small>
+        </td>
+      </tr>
+      <tr class="field">
+        <td>
+          <%=f.label 'Descripción*' %>
+          <br><small> Descripción del producto</small>
+        </td>
+        <td>
+          <%=f.text_field :definicion ,id: 'descripcion',placeholder:'Ingrese la descripción del producto',class: 'form-control' %>
+          <small id="msg_descripcion"></small>
+        </td>
+      </tr>
+      <tr class="field">
+        <td>
+          <%=f.label 'Código*' %>
+          <br><small> Nombre clave único para identificar un producto</small>
+        </td>
+        <td>
+          <%=f.text_field :codigo,id: 'codigo',placeholder:'Ingrese el código del producto' ,class: 'form-control' %>
+          <small id="msg_codigo"></small>
+        </td>
+      </tr>
+      <tr class="field">
+        <td>
+          <%=f.label 'Localización' %>
+          <br><small> Nombre que identifica la localización física del producto</small>
+        </td>
+        <td>
+          <%=f.text_field :lugar,placeholder:'Ingrese el lugar del producto' ,class: 'form-control' %>
+        </td>
+      </tr>
+      <tr class="field">
+        <td>
+
+          <div class="form-check">
+            <label class="form-check-label">
+              <%=f.check_box :kit, class: 'form-check-input',id: 'check_kit'%>
+
+                <%=f.label :kit, class: 'form-check-label'%>
+
+            </label><br>
+            <small>Campo que identifica si el producto contiene otros productos</small>
+          </div>
+
+        </td>
+        <td >
+
+        </td>
+      </tr>
+      <tr id="form_kit" <% if !@producto.kit %>style="display: none"<% end %> >
+        <td>
+          <label>Categoría</label>
+          <%= select_tag :cat_id,options_for_select(@categorias.collect{ |categoria| [categoria.nombre, categoria.id]}),id: 'cat_select',class: 'custom-select', value:formulario_kit_path  %>
+          <div id="div_pro_select">
+            <br>
+            <label>Producto</label>
+            <%= select_tag :pro_id,options_for_select(@productos.collect{ |producto| [producto.nombre, producto.id]}),id: 'pro_select', class: 'custom-select' %>
+          </div>
+          <br>
+          <a id="btnAgregar" class="btn btn-primary text-light btn-sm" value="<%= agregar_producto_kit_path %>">
+            Agregar
+          </a>
+        </td>
+        <td>
+          <label>Productos dentro del Kit</label>
+          <table class="table table-sm table-bordered">
+            <thead class="bg-primary text-light">
+            <th class="col-9">Nombre</th>
+            <th class="col-2">Cantidad</th>
+            <th class="col-1 eliminar">Quitar</th>
+            </thead>
+            <tbody id="tbody_kit">
+              <%@productos_del_kit.each do |pro_kit|  %>
+              <tr id="<%= pro_kit.producto_id%>" class="fila_kit" >
+                <td >
+                  <%= Producto.find(pro_kit.producto_id.to_i).nombre %>
+                </td>
+                <td>
+                  <%= number_field_tag 'quantity', pro_kit.cantidad.to_s, within: 1...100, maxlength: 2 %>
+                </td>
+                <td class="text-center">
+                  <%= (fa_icon 'trash', class: "eliminar btn btn-danger")  %>
+                </td>
+              </tr>
+              <% end if @producto.kit%>
+            </tbody>
+          </table>
+          <small id="mensaje_kit"></small>
+        </td>
+      </tr>
+      <tr class="field">
+        <td width="50%">
+          <div class="form-check">
+            <label class="form-check-label">
+              <%=f.check_box :disponible_en_inventario, class: 'form-check-input'%><%=f.label :disponible_en_inventario, class: 'form-check-label'%>
+            </label><br>
+            <small>Campo que identifica si el producto está físicamente en el inventario</small>
+          </div>
+        </td>
+        <td width="50%">
+          <div class="form-check">
+            <label class="form-check-label">
+              <%=f.check_box :iva, class: 'form-check-input'%><%=f.label 'IVA', class: 'form-check-label'%>
+            </label>
+            <br><small>Campo que identifica si al producto se le agrega el IVA</small>
+          </div>
+        </td>
+      </tr>
+      <tr class="field">
+        <td>
+          <%=f.label 'Precio*'%><br>
+          <small>Precio al que se venderá el producto</small>
+        </td>
+        <td>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <span class="input-group-text">$</span>
+            </div>
+            <%=f.text_field :precio,id:'precio', class: 'form-control',placeholder: 'Ingrese el precio de venta'%>
+
+          </div>
+          <small id="msg_precio"></small>
+        </td>
+      </tr>
+      <tr class="field">
+        <td>
+          <%=f.label 'Costo*'%><br>
+          <small> Precio al que se compró el producto</small>
+        </td>
+        <td>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <span class="input-group-text">$</span>
+            </div>
+            <%=f.text_field :precio_costo, id: 'precio_costo' ,class: 'form-control',placeholder: 'Ingrese el precio de compra'%>
+          </div>
+          <small id="msg_precio_costo"></small>
+
+        </td>
+      </tr>
+      <tr class="field">
+        <td>
+          <label>Categorías</label><br>
+          <small>Categorías a las que pertenece el producto</small>
+        </td>
+        <td id="lista_categorias">
+          <% @categorias.each do |categoria| %>
+          <div class="form-check">
+            <label class="form-check-label">
+              <%if @categorias_enlazadas.include?(categoria)%>
+                <%= check_box_tag "categoria[]", categoria.id,checked= true, class: 'form-check-input'%><%=f.label categoria.nombre, class: 'form-check-label'  %>
+              <%else%>
+                <%=check_box_tag "categoria[]",categoria.id,checked=false,{class: 'form-check-input',checked: false}%><%=f.label categoria.nombre , class: 'form-check-label' %>
+              <%end %>
+            </label>
+          </div>
+          <% end %>
+          <small id="mensaje_categorias"></small>
+        </td>
+      </tr>
+      <tr class="field">
+        <td>
+          <label>Unidades</label><br>
+          <small>Unidades de medición en las que se vende el producto</small>
+        </td>
+        <td>
+
+          <%=f.select(:unidad_id,{},{},{class: 'custom-select'}) do %>
+
+            <% @unidades.each do |unidad| %>
+              <% if unidad.id != @producto.unidad_id%>
+                <%= content_tag :option, unidad.nombre ,value: unidad.id %>
+              <% else %>
+                <%= content_tag :option, unidad.nombre ,value: unidad.id,selected: 'selected'%>
+              <% end %>
+            <% end %>
+          <%  end  %>
+        </td>
+      </tr>
+      <tr class="field" >
+        <td>
+          <label>Logotipo:</label><br>
+          <small>Imagen del producto</small>
+        </td>
+        <td>
+          <%= f.file_field :imagen, class: 'filestyle'%>
+        </td>
+      </tr>
+      <tr>
+      </tr>
+    </table>
+    <table class="table table-responsive-sm">
+      <tr>
+        <!--botón nombre, cambia respecto a la función que hace-->
+        <td align="center"><br><small class="form-text text-muted">Nota: Los campos marcados con * son obligatorios</small>
+          <br>
+          <%= hidden_field_tag :productos_kit,"",{id: "array_productos"}%>
+          <%= hidden_field_tag :cantidades_kit,"",{id: "array_cantidades"}%>
+          <!-- funcion cancelar-->
+          <% if nombre=="Crear Producto" %>
+            <%=f.submit 'Guardar',id: 'btnGuardar', class:'btn btn-primary btn-sm', onclick: 'return validarFormularioProductos();' %>
+          <% else %>
+            <%= f.submit 'Guardar Cambios',id: 'btnGuardar', class:'btn btn-primary btn-sm', onclick: 'return validarFormularioProductos();'%>
+          <% end %>
+
+          <%= link_to 'Cancelar', '#',id:"cancelar",class:'btn btn-danger btn-sm',data: {toggle: 'modal', target: '#ModalForm'} %>
+        </td>
+      </tr>
+    </table>
+  </div>
+<% end %>

@@ -1,0 +1,13 @@
+<%= form_tag :action => :actualiza, :id => @terminal.id do %>
+  <h4 class="text-center">Modificación de una Terminal</h4><br>
+  <%= render 'form', nombre: 'Editar Terminal'%>
+  <div class="text-center">
+    <table class="table">
+      <tr>
+        <td><small>Nota: Los campos marcados con * son obligatorios</small> <br><br>
+          <%= submit_tag  'Guardar cambios', class: 'btn btn-sm btn-primary', id: 'btnGuardar' ,onclick: 'return validarFormularioTerminal();'%>
+          <%= link_to 'Cancelar', '#',id:"cancelar",class:'btn btn-danger btn-sm',data: {toggle: 'modal', target: '#ModalForm'} %>
+      </tr>
+    </table>
+  </div>
+<% end %>

@@ -1,0 +1,49 @@
+<div class="col-md-12 align-content-center">
+<h4 class="text-center">Vista de una Sucursal</h4>
+    <div class="panel-body">
+      <div class="row">
+          </br>
+          <table class="table ">
+            <tr>
+              <td width="50"><b>Nombre</b><br><small>Nombre que identifica a la sucursal</small></td>
+              <td><%= @sucursal.nombre %></td>
+            </tr>
+            <tr>
+              <td width="50"><b>Teléfono(s)</b><br><small>Teléfono(s) de la sucursal</small></td>
+              <td><%= @sucursal.telefonos%></td>
+            </tr>
+            <tr>
+              <td width="50"><b>Iniciales</b><br><small>Iniciales que identifican a la Sucursal (máximo de cuatro caracteres )</small></td>
+              <td><%= @sucursal.iniciales%></td>
+            </tr>
+            <tr>
+              <td width="40%"><b>Dirección</b><br><small>Ubicación fiscal de la sucursal</small></td>
+              <td><%= @sucursal.direccion %></td>
+            </tr>
+            <tr>
+              <td width="20"><b>Ciudad</b><br><small>Municipio donde se ubica la sucursal</small></td>
+              <td><%= @sucursal.ciudad%></td>
+            </tr>
+            <tr>
+              <td width="20"><b>Estado</b><br><small>Entidad federativa</small></td>
+              <td><%= @sucursal.estado%></td>
+            </tr>
+            <tr>
+              <td width="20"><b>Código postal </b><br><small>Código Postal de la Ciudad donde se ubica la sucursal</small></td>
+              <td><%= @sucursal.codigo_postal %></td>
+            </tr>
+          </table>
+      </div>
+      <br>
+      <div class="text-center">
+        <table class="table ">
+          <tr>
+            <td><%= link_to 'Modificar', edit_sucursal_path(@sucursal),class: 'btn btn-primary btn-sm' %>
+              <%= link_to 'Nueva', new_sucursal_path, class: 'btn btn-primary btn-sm' %>
+            <%= link_to 'Regresar', sucursales_path,class: 'btn btn-primary btn-sm' %></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+</div>
+

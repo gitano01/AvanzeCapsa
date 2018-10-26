@@ -1,0 +1,51 @@
+<div class="col-md-12 align-content-center">
+  <h4 class="text-center">Vista de una Terminal</h4><br>
+      <div class="row">
+        </br>
+        <table class="table">
+          <tr>
+            <td width="50%"><b>Nombre</b><br><small>Nombre que identifica a la terminal</small></td>
+            <td><%= @terminal.nombre %></td>
+          </tr>
+          <tr>
+            <td><b>Sucursal</b><br><small>Sucursal a la pertenece la terminal </small></td>
+            <td><%= @terminal.sucursal.nombre%></td>
+          </tr>
+          <tr>
+            <td><b>Inventario</b><br><small> Inventario asignado a la terminal</small></td>
+            <td><%=@terminal.inventario.nombre %></td>
+          </tr>
+          <% if @terminal.cajas_registradora.present? %>
+            <tr>
+              <td><b>Caja Registradora</b><br><small> Caja Registradora asignada  a la terminal</small></td>
+              <td><%= @terminal.cajas_registradora.nombre%>
+            </tr>
+            <tr>
+              <td><b>Monto Inicial</b><br><small> Cantidad monetaria con la que se abre la caja por defecto</small></td>
+              <td> $<%=  @terminal.cajas_registradora.monto_inicial%>
+            </tr>
+            <tr>
+              <td><b>Caja Registradora Habilitada</b><br><small> Terminal con posibilidad de realizar cobros al vender</small></td>
+                <% if @terminal.cajas_registradora_id  %>
+                  <td><%= 'Si' %></td>
+                <% else %>
+                  <td><%= 'No'%>
+                <% end %>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+      <br>
+      <div class="text-center">
+        <table class="table ">
+          <tr>
+            <td><%= link_to 'Modificar', edit_terminal_path(@terminal),class: 'btn btn-primary btn-sm' %>
+              <%= link_to 'Nueva', new_terminal_path, class: 'btn btn-primary btn-sm' %>
+              <%= link_to 'Regresar', terminales_path,class: 'btn btn-primary btn-sm' %></td>
+          </tr>
+        </table>
+      </div>
+      <!--end-->
+    </div>
+
+

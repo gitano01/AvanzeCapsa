@@ -1,0 +1,49 @@
+  <br/><br/>
+  <h4 class="text-center">Configuración de permisos de acceso por módulo</h4>
+  	<h5 class="text-center"><strong>Usuario:</strong> <%= @usuario.usuario + ' / ' + @usuario.empleado.nombre_completo + ' ' + @usuario.empleado.apellido_paterno + ' ' + @usuario.empleado.apellido_materno %> </h5><br/>
+  
+  	<div class="row">
+  		<div class="col-md-6">
+        <table class="table table-sm">
+          <thead class="bg-primary text-white">
+            <tr>
+              <th class="text-center">Módulos a los que NO tendrá acceso el Usuario:</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if @usuario.modulos.size == @modulos.size %>
+              <tr><td class="text-right">NINGUNO</td></tr>
+            <% else %>
+              <% @modulos.each do |m| %>
+                <% unless @usuario.modulos.include? m %>
+                  <tr><td class="text-right"><%= m.nombre %></td></tr>
+                <% end %>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+  		</div>
+  		<div class="col-md-6">
+        <table class="table table-sm">
+          <thead class="bg-primary text-white">
+            <tr>
+              <th class="text-center">Módulos a los que tendrá acceso el Usuario:</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if @usuario.modulos.size == 0 %>
+              <tr><td class="text-right">NINGUNO</td></tr>
+            <% else %>
+              <% @usuario.modulos.each do |m| %>
+                <tr><td class="text-right"><%= m.nombre %></td></tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+  		</div>
+  	</div>
+    <div class="text-center">
+      <td><%= link_to "Modificar", {:controller => 'permisos', :action => :mod_usuarios_rest, :id => @usuario.id}, {class: 'btn btn-sm btn-primary'} %></td>
+      <td><%= link_to 'Regresar', :back, {class: 'btn btn-sm btn-primary'} %></td>
+    </div>
+

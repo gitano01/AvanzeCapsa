@@ -1,0 +1,36 @@
+
+<div class="col-md-12">
+<%= form_for @unidad  do |f|  %>
+    <table class="table">
+      <tr>
+        <td width="25%">
+          <%=f.label 'Nombre *' %>
+          <br><small> Nombre que identifica la unidad de medida.</small>
+        </td>
+        <td>
+          <%= f.text_field :nombre,id: 'nombre', placeholder: 'Ingrese el nombre de la unidad', class: 'form-control', autofocus: true,
+                           maxlength: 25%>
+          <small id="msg_nombre"></small>
+        </td>
+      </tr>
+    </table>
+    <table class="table">
+      <tr>
+        <td align="center">
+          <small class="form-text text-muted">Nota: Los campos marcados con * son obligatorios</small>
+          <br>
+          <!-- Agregacion ID-->
+          <!-- funcion cancelar con  la confirmación-->
+          <% if nombre=="Crear Unidad" %>
+            <%= f.submit 'Guardar', class: 'btn btn-primary btn-sm',onclick: 'return validarFormularioUnidades();' %>
+          <% else %>
+            <%= f.submit 'Guardar Cambios', class: 'btn btn-primary btn-sm',onclick: 'return validarFormularioUnidades();' %>
+          <% end %>
+          <%= link_to 'Cancelar', '#', class: 'btn btn-danger btn-sm',data: {toggle: 'modal', target: '#ModalForm'} %>
+        </td>
+      </tr>
+    </table>
+<%end%>
+</div>
+
+

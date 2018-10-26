@@ -1,0 +1,12 @@
+
+  <tr id="<%= @producto_kit.id%>" class="fila_kit" >
+    <td >
+      <%= @producto_kit.nombre %>
+    </td>
+    <td>
+      <%= number_field_tag 'quantity', '1', within: 1...100 %>
+    </td>
+    <td class="text-center">
+      <%= (fa_icon 'trash', class: "eliminar btn btn-danger")  %>
+    </td>
+  </tr>

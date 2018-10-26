@@ -1,0 +1,47 @@
+<div class="panel panel-info">
+  <div class="panel-heading"><h4 class="text-center">Catálogo de Inventarios</h4></div>
+  <div class="panel-body"><br>
+    <%if @inventarios.size > 0 %>
+      <table class="table table-bordered table-sm">
+        <thead class="bg-primary text-light">
+        <th>Nombre</th>
+        <th width="10%" colspan="5">Opciones</th>
+        </thead>
+        <tbody>
+        <% @inventarios.each do |inventario| %>
+          <tr>
+            <td> <%= inventario.nombre %> </td>
+            <td class="text-center">
+              <%= link_to edit_inventario_path(inventario), title: 'Modificar' do %>
+                <%= fa_icon "edit"%>
+              <% end %>
+            </td >
+
+            <td><%= link_to ( fa_icon 'trash'), '#',data: { toggle: 'modal', target: '#ModalIndex' },onclick:('cambiarId('+inventario.id.to_s+',"'+@controlador.to_s+'");return false;'), title: 'Eliminar'%></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+      <div class="text-center">
+        <table class="table align-content-center">
+          <tr>
+            <td>
+              <%= link_to 'Nuevo', new_inventario_path, class: 'btn btn-primary btn-sm'   %><br>
+            </td>
+          </tr>
+        </table>
+      </div>
+    <% else %>
+      <br/><h3 align="center"><%= "No existen inventarios actualmente" %></h3>
+      <div class="text-center">
+        <table class="table align-content-center">
+          <tr>
+            <td>
+              <%= link_to 'Nuevo', new_inventario_path, class: 'btn btn-primary btn-sm'   %><br>
+            </td>
+          </tr>
+        </table>
+      </div>
+    <%end%>
+  </div>
+</div>

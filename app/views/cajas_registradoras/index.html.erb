@@ -1,0 +1,33 @@
+<h4 class="text-center"> Cátalogo de Cajas Registradoras</h4><br>
+   <table class="table table-bordered table-sm">
+    <thead class="bg-primary text-light">
+      <th>Nombre</th>
+      <th>Monto inicial</th>
+      <th colspan="2" class="text-center" width="20%">Opciones</th>
+    </thead>
+    <tbody>
+      <% @cajas_registradoras.each do |cajas_registradora|%>
+        <tr>
+          <td> <%= cajas_registradora.nombre %> </td>
+          <td> <%= cajas_registradora.monto_inicial %> </td>
+          <td class="text-center"><%= link_to edit_cajas_registradora_path(cajas_registradora) do %>
+              <%= fa_icon 'edit', title: 'Modificar' %>
+            <% end %>
+          </td>
+          <td class="text-center">
+                <%= link_to (fa_icon 'trash'), '#', data: { toggle: 'modal', target: '#ModalIndex' } ,
+                            onclick:('cambiarIdYNombre('+cajas_registradora.id.to_s+',"'+@controlador.to_s+'","'+ @controladorSingular.to_s+'","'+ cajas_registradora.nombre+'");return false;'),
+                            title: 'Eliminar'
+                %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+<table class="table">
+  <tr>
+    <td class="text-center"><%= link_to 'Nueva', new_cajas_registradora_path, class: 'btn btn-sm btn-primary' %></td>
+  </tr>
+</table>
+

@@ -1,0 +1,49 @@
+
+<h4 class="text-center">Catálogo de Promociones y Descuentos</h4><br/>
+
+<% if @descuentos.size > 0 %>
+  <table class="table table-bordered table-hover table-sm">
+    <thead class="bg-primary text-white">
+      <tr>
+        <th>Nombre</th>
+        <th>Monto</th>
+        <th>Fecha inicial</th>
+        <th>Fecha final</th>
+        <th colspan="3" class="text-center">Opciones</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @descuentos.each do |descuento| %>
+        <tr>
+          <td><%= descuento.nombre %></td>
+          <td><%= descuento.monto %> % </td>
+          <td><%= descuento.fecha_inicial %></td> 
+          <td><%= descuento.fecha_final %></td>
+          <td class="text-center"><%= link_to descuento do %>
+              <%= fa_icon 'eye', title: 'Mostrar' %>
+            <% end %>
+          </td>
+          <td class="text-center"><%= link_to edit_descuento_path(descuento) do %>
+              <%= fa_icon 'edit', title: 'Modificar' %>
+            <% end %>
+          </td>
+          <td class="text-center">
+                <%= link_to (fa_icon 'trash'), '#', data: { toggle: 'modal', target: '#ModalIndex' } ,
+                            onclick:('cambiarIdYNombre('+descuento.id.to_s+',"'+@controlador.to_s+'","'+ @controladorSingular.to_s+'","'+ descuento.nombre+'");return false;'),
+                            title: 'Eliminar'
+                %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <h5 class="text-center">No existen Promociones actualmente</h5>
+<% end %>
+
+<table class="table">
+  <tr>
+    <td class="text-center"><%= link_to 'Nueva', new_descuento_path, class: 'btn btn-sm btn-primary' %></td>
+  </tr>
+</table>
